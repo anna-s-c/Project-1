@@ -1,7 +1,52 @@
-html, body {
-    margin: 0;
-    padding: 0;
-  }
-  canvas {
-    display: block;
-  }
+/* Basic reset to remove default margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set the overall background color and font family for the body */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0; /* Light gray background */
+  color: #333; /* Dark gray text */
+  text-align: center; /* Center text and other inline elements */
+}
+
+/* Style the main container */
+main {
+  padding: 20px;
+}
+
+/* Style the header */
+h1 {
+  font-size: 2.5em; /* Large header text */
+  color: #333; /* Dark gray text color */
+  margin-bottom: 20px; /* Space below the header */
+}
+
+/* Style the input elements and button */
+input[type="text"], button {
+  font-size: 1em;
+  padding: 10px;
+  margin: 10px;
+  border: 2px solid #333;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+button {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+/* Ensure the canvas takes up full width and height */
+canvas {
+  display: block; /* Remove extra space below the canvas */
+  margin: 0 auto; /* Center the canvas horizontally */
+}
