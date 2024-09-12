@@ -8,7 +8,7 @@ let r = 15; // variable to store the radius of the dots
 let angle = 0; // variable to store the angle for rotating the dots
 let ranFactor; // variable to store a random factor for text point sampling
 let c = 0; // color of dots
-let currentName = "Anna"; // default name rn
+let currentName = "Anna"; // default name at the moment
 
 function preload() { // loads external assets like font/images
   font = loadFont("fonts/Roboto-Regular.ttf"); // Ensures this path is correct
