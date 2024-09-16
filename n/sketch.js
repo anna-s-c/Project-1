@@ -11,7 +11,7 @@ let c = 0; // color of dots
 let currentName = "Anna"; // default name at the moment
 
 function preload() { // loads external assets like font/images
-  font = loadFont("fonts/Roboto-Regular.ttf"); // Ensures this path is correct
+  font = loadFont("fonts/Roboto-Regular.ttf"); // Ensure this path is correct
 }
 
 function setup() { // function that runs when the program starts
@@ -29,61 +29,40 @@ function setup() { // function that runs when the program starts
   });
 
   // Create input elements
-  greeting = createElement('h2', 'What is your name?');
-  greeting.position(20, 5);
+  nameInput = createInput(); // create a text input field
+  nameInput.position(20, 65); // position the input field
 
-  nameInput = createInput();
-  nameInput.position(20, 65);
+  button = createButton('submit'); // create a button
+  button.position(nameInput.x + nameInput.width, 65); // position the button
+  button.mousePressed(updateText); // set the button's action
 
-  button = createButton('submit');
-  button.position(nameInput.x + nameInput.width, 65);
-  button.mousePressed(greet);
-
-  nameInput.changed(greet);
+  greeting = createElement('h2', 'Enter your name'); // create a greeting element
+  greeting.position(20, 5); // position the greeting element
 }
 
 function draw() {
-  background(220, 0.07);
-  drawPoints();
-  
-  c += 0.1; 
-  c = c % 360; // cycling around the color wheel
-  angle += 10;
-}
+  background(220); // clear the background
 
-function drawPoints() {
+  // Draw the points
   for (let i = 0; i < points.length; i++) {
-    noStroke();
-    stroke(c, 50, 100);
-
-    let brightness = map(i, 0, points.length, 50, 100); // Map index to brightness between 50 and 100
-
-    fill(c, 100, brightness);
-
-    ellipse(points[i].x + r * sin(angle + i * 25), points[i].y, height * 0.05, height * 0.05);
+    let pt = points[i];
+    stroke(c, 100, 100);
+    strokeWeight(r);
+    point(pt.x, pt.y);
   }
 }
 
-function greet() {
-  background(255);
+function updateText() {
+  currentName = nameInput.value(); // get the value from the input field
+  greeting.html('Hello ' + currentName + '!'); // update the greeting
 
-  // Get the name from the input field
-  currentName = nameInput.value();
-
-  // Update the greeting text
-  greeting.html(`Hello, ${currentName}!`);
-
-  // Convert the new name to points for animation
+  // Update the points array with the new name
   points = font.textToPoints(currentName, width * 0.05, height / 2, 300, {
     sampleFactor: ranFactor,
     simplifyThreshold: 0
   });
-
-  // Clear the input field after submitting
-  nameInput.value('');
 }
 
-// Draw random circles at mouse position on mouse click
 function mousePressed() {
   let radius = random(10, 50); // Random radius between 10 and 50
   let x = mouseX;
