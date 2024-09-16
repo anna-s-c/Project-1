@@ -30,14 +30,14 @@ function setup() { // function that runs when the program starts
 
   // Create input elements
   nameInput = createInput(); // create a text input field
-  nameInput.position(20, 65); // position the input field
+  nameInput.position(20, 125); // position the input field
 
   button = createButton('submit'); // create a button
-  button.position(nameInput.x + nameInput.width, 65); // position the button
+  button.position(nameInput.x + nameInput.width, 125); // position the button
   button.mousePressed(updateText); // set the button's action
 
   greeting = createElement('h2', 'Enter your name'); // create a greeting element
-  greeting.position(20, 5); // position the greeting element
+  greeting.position(30, 100); // position the greeting element
 }
 
 function draw() {
@@ -79,4 +79,10 @@ function keyPressed() {
   if (key === 's') {
     saveGif('mySketch', 5, { delay: 1 });
   }
+}
+
+//handle window resizing
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  updatePoints (currentName);
 }
