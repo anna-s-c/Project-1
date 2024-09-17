@@ -8,7 +8,7 @@
 /* Set the overall background color and font family for the body */
 body { /* applies styles to the body element */
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0; /* Light gray background */
+  background-color: #ffbfbf; /* Light gray background */
   color: #333; /* Dark gray text */
   text-align: center; /* Center text and other inline elements */
 }
@@ -32,7 +32,7 @@ input[type="text"], button {
   margin: 10px;
   border: 2px solid #333;
   border-radius: 4px;
-  background-color: #fff;
+  background-color: #f3cfcf;
 }
 
 button {
@@ -48,5 +48,7 @@ button:hover {
 /* Ensure the canvas takes up full width and height */
 canvas {
   display: block; /* Remove extra space below the canvas */
-  margin: 0 auto; /* Center the canvas horizontally */
+  margin: 50px auto 0 auto; /* Center the canvas horizontally */
+  width: 100vw;
+  height: 100vh;
 }
