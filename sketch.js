@@ -2,6 +2,7 @@ let nameInput; // variable to store the text input
 let button; // variable to store the button
 let greeting; // variable to store the greeting text
 let saveGifButton; // variable to store the save gif button
+let spinner; // variable to store the loading spinner
 
 let font; // variable to store the loaded font
 let points = []; // array to store the points that make up the text
@@ -16,36 +17,52 @@ function preload() { // loads external assets like font/images
 }
 
 function setup() { // function that runs when the program starts
-  createCanvas(windowWidth, windowHeight); // canvas covers the entire window
+  createCanvas(800, 450); // Set the canvas size
   angleMode(DEGREES); // sets angle mode to degrees
   colorMode(HSB); // sets color mode to HSB (Hue, Saturation, Brightness)
 
   // Random factor for text point sampling
   ranFactor = random(0.07, 0.9);
 
-// convert default name to an array of points using the loaded font
-updatePoints(currentName);
+  // Convert default name to an array of points using the loaded font
+  updatePoints(currentName);
 
   // Create input elements
   nameInput = createInput(); // create a text input field
   nameInput.position(20, 125); // position the input field
 
   button = createButton('submit'); // create a button
-  button.position(nameInput.x + nameInput.width, 125); // position the button
+  button.position(nameInput.x + nameInput.width + 10, 125); // position the button
   button.mousePressed(updateText); // set the button's action
 
   greeting = createElement('h2', 'Enter your name'); // create a greeting element
   greeting.position(30, 100); // position the greeting element
 
+  // Create save GIF button container
+  let saveGifContainer = createDiv();
+  saveGifContainer.position(-1020, 350);
+  saveGifContainer.style('position', 'relative');
+
   // Create save GIF button
   saveGifButton = createButton('Save GIF'); // create a save GIF button
-  saveGifButton.position(20, 160); // position the save GIF button
-  saveGifButton.mousePressed(() => saveGif('mySketch', 5, { delay: 1 })); // set the button's action to save the GIF
+  saveGifButton.parent(saveGifContainer); // append button to container
+  saveGifButton.mousePressed(startSavingGif); // set the button's action to save the GIF
+
+  // Create loading spinner
+  spinner = createDiv();
+  spinner.class('spinner');
+  spinner.parent(saveGifContainer); // append spinner to container
 }
-  function draw() {
+
+function draw() {
   background(220); // clear the background
 
-  // Draw the points
+  // Draw a smaller white background behind the name
+  fill(255); // white color
+  noStroke();
+  rect(width * 0.05 - 20, height / 2 - 100, width * 0.9 + 40, 200); // adjust the size and position of the rectangle
+
+  // Draw the points with animation
   for (let i = 0; i < points.length; i++) {
     let pt = points[i];
     let x = pt.x + sin(angle + i) * 10; // Animate x position
@@ -55,17 +72,33 @@ updatePoints(currentName);
     strokeWeight(r);
     point(x, y);
   }
+
   angle += 0.05; // increment the angle
 }
 
 function updateText() {
   currentName = nameInput.value(); // get the value from the input field
   greeting.html('Hello ' + currentName + '!'); // update the greeting
-  updatePoints(currentName);
+
+  updatePoints(currentName); // update the points array with the new name
 }
+
+function startSavingGif() {
+  showSpinner();
+  saveGif('mySketch', 5, { delay: 1 }).then(hideSpinner);
+}
+
+function showSpinner() {
+  spinner.style('display', 'block');
+}
+
+function hideSpinner() {
+  spinner.style('display', 'none');
+}
+
 function updatePoints(name) {
   // Update the points array with the new name
-  points = font.textToPoints(currentName, width * 0.05, height / 2, 300, {
+  points = font.textToPoints(name, width * 0.05, height / 2, 300, {
     sampleFactor: ranFactor,
     simplifyThreshold: 0
   });
@@ -89,8 +122,9 @@ function keyPressed() {
   }
 }
 
-//handle window resizing
+// Handle window resizing
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  updatePoints (currentName);
+  updatePoints(currentName);
 }
+  
