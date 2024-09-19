@@ -14,6 +14,7 @@ let currentName = "Anna"; // default name at the moment
 
 function preload() { // loads external assets like font/images
   font = loadFont("Roboto-Regular.ttf"); // Ensure this path is correct
+  console.log("Font loaded:", font);
 }
 
 function setup() { // function that runs when the program starts
@@ -40,7 +41,7 @@ function setup() { // function that runs when the program starts
 
   // Create save GIF button container
   let saveGifContainer = createDiv();
-  saveGifContainer.position(-1020, 350);
+  saveGifContainer.position(-1050, 300);
   saveGifContainer.style('position', 'relative');
 
   // Create save GIF button
@@ -98,21 +99,17 @@ function hideSpinner() {
 
 function updatePoints(name) {
   // Update the points array with the new name
-  points = font.textToPoints(name, width * 0.05, height / 2, 300, {
+  points = font.textToPoints(name, width * 0.07, height / 1.5, 300, {
     sampleFactor: ranFactor,
     simplifyThreshold: 0
   });
+  console.log("Points updated:", points);
 }
 
 function mousePressed() {
-  let radius = random(10, 50); // Random radius between 10 and 50
-  let x = mouseX;
-  let y = mouseY;
-  let randomColor = color(random(255), random(255), random(255)); // Random color
-
-  noStroke();
-  fill(randomColor);
-  ellipse(x, y, radius, radius);
+ // Change the style of the name on mouse click
+ r = random(5, 20); // Random radius between 5 and 20
+ c = color(random(360), 100, 100); // Random color in HSB mode
 }
 
 // Save a 5-second gif when the user presses the 's' key
@@ -127,4 +124,3 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   updatePoints(currentName);
 }
-  
