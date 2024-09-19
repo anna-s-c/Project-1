@@ -7,8 +7,8 @@
 
 /* Set the overall background color and font family for the body */
 body { /* applies styles to the body element */
-  font-family: Arial, sans-serif;
-  background-color: #ffbfbf; /* Light gray background */
+  font-family: Arial, sans-serif, FascinateInline; /* Set the font family */
+  background-color: #ffbfbf; /* Light pink background */
   color: #333; /* Dark gray text */
   text-align: center; /* Center text and other inline elements */
 margin: 0;
@@ -31,6 +31,13 @@ justify-content: center;
   left: 50%;
   transform: translate(-50%, -50%);
   display: none; /* Initially hidden */
+}
+
+@font-face {
+  font-family: 'FascinateInline';
+  src: url('FascinateInline-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @keyframes spin {
@@ -92,4 +99,5 @@ canvas {
   margin: auto; /* Center the canvas horizontally */
   width: 100vw;
   height: 500vh;
+  margin-left: 100px
 }

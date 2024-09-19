@@ -13,6 +13,8 @@ let ranFactor; // variable to store a random factor for text point sampling
 let c = 0; // color of dots
 let currentName = "Anna"; // default name at the moment
 
+let movementPattern = 0; // Variable to control the movement pattern
+
 function preload() { // loads external assets like font/images
   font = loadFont("Roboto-Regular.ttf"); // Ensure this path is correct
   console.log("Font loaded:", font);
@@ -71,8 +73,31 @@ function draw() {
   // Draw the points with animation
   for (let i = 0; i < points.length; i++) {
     let pt = points[i];
-    let x = pt.x + sin(angle + i) * 10; // Animate x position
-    let y = pt.y + cos(angle + i) * 10; // Animate y position
+    let x = pt.x + sin(angle + i) * 15; // Animate x position
+    let y = pt.y + cos(angle + i) * 15; // Animate y position
+
+    switch (movementPattern) {
+      case 0:
+        x = lerp(pt.x, pt.x + sin(angle * 4 + i * 0.5) * 15, 0.5); // Slow initial movement
+        y = lerp(pt.y, pt.y + cos(angle * 4 + i * 0.5) * 15, 0.5); // Slow initial movement
+        break;
+      case 1:
+        x = lerp(pt.x, pt.x + cos(angle * 4 + i * 0.5) * 15, 0.5); // Slow initial movement
+        y = lerp(pt.y, pt.y + sin(angle * 4 + i * 0.5) * 15, 0.5); // Slow initial movement
+        break;
+      case 2:
+        x = lerp(pt.x, pt.x + tan(angle * 8 + i * 0.5) * 15, 0.5); // Slow initial movement
+        y = lerp(pt.y, pt.y + tan(angle * 8 + i * 0.5) * 15, 0.5); // Slow initial movement
+        break;
+      case 3:
+        x = lerp(pt.x, pt.x + sin(angle * 8 + i * 0.5) * 15, 0.5); // Slow initial movement
+        y = lerp(pt.y, pt.y + cos(angle * 8 + i * 0.5) * 15, 0.5); // Slow initial movement
+        break;
+      default:
+        x = lerp(pt.x, pt.x + sin(angle * 14 + i * 0.1) * 15, 0.5); // Slow initial movement
+        y = lerp(pt.y, pt.y + cos(angle * 14 + i * 0.1) * 15, 0.5); // Slow initial movement
+    }
+
     let hue = (angle * 10 + i * 10) % 360; // Animate color
     stroke(hue, 100, 100);
     strokeWeight(r);
@@ -113,11 +138,16 @@ function updatePoints(name) {
 
 function mousePressed() {
  // Change the style of the name on mouse click
- r = random(5, 20); // Random radius between 5 and 20
- c = color(random(360), 100, 100); // Random color in HSB mode
+ r = random(5, 25); // Random radius between 5 and 20
+ c = color(random(360), 30, 90); // Random color in HSB mode
 
   // Change the background color
-  bgColor = color(random(360), 100, 100); // Random color in HSB mode
+  bgColor = color(random(360), 30, 90); // Random color in HSB mode
+   // Change the sample factor to adjust the distances of the dots
+   ranFactor = random(0.09, 0.2); // Random sample factor between 0.05 and 0.2
+   updatePoints(currentName); // Update the points with the new sample factor
+  // Change the movement pattern
+  movementPattern = (movementPattern + 1) % 4; // Cycle through movement patterns
 }
 
 // Save a 5-second gif when the user presses the 's' key
