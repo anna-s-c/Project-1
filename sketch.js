@@ -3,6 +3,7 @@ let button; // variable to store the button
 let greeting; // variable to store the greeting text
 let saveGifButton; // variable to store the save gif button
 let spinner; // variable to store the loading spinner
+let bgColor;
 
 let font; // variable to store the loaded font
 let points = []; // array to store the points that make up the text
@@ -24,6 +25,10 @@ function setup() { // function that runs when the program starts
 
   // Random factor for text point sampling
   ranFactor = random(0.07, 0.9);
+
+    // Initialize background color
+    bgColor = color(220); // Default background color
+
 
   // Convert default name to an array of points using the loaded font
   updatePoints(currentName);
@@ -56,12 +61,12 @@ function setup() { // function that runs when the program starts
 }
 
 function draw() {
-  background(220); // clear the background
+  background(bgColor); // clear the background
 
   // Draw a smaller white background behind the name
-  fill(255); // white color
+  fill(0, 0, 100, 0.5); // white color
   noStroke();
-  rect(width * 0.05 - 20, height / 2 - 100, width * 0.9 + 40, 200); // adjust the size and position of the rectangle
+  rect(width * 0.05 - 20, height / 2 - 170, width * 0.9 + 40, 300); // adjust the size and position of the rectangle
 
   // Draw the points with animation
   for (let i = 0; i < points.length; i++) {
@@ -110,6 +115,9 @@ function mousePressed() {
  // Change the style of the name on mouse click
  r = random(5, 20); // Random radius between 5 and 20
  c = color(random(360), 100, 100); // Random color in HSB mode
+
+  // Change the background color
+  bgColor = color(random(360), 100, 100); // Random color in HSB mode
 }
 
 // Save a 5-second gif when the user presses the 's' key
